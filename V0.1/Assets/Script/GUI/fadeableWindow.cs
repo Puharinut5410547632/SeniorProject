@@ -13,13 +13,12 @@ public class fadeableWindow : simpleWindow {
 	{
 		FADEIN,		// Fade in
 		FADEOUT,	// Fade out
-		DISPLAY, 	// This is for no fading
 	};
 
 	// Update is called once per frame
 	void Update () {
 		fadeNormallySpeed ();
-		if (m_State == State.FADEIN || m_State == State.DISPLAY){
+		if (m_State == State.FADEIN){
 			fadeIn ();
 			setOpacity ();
 		}
@@ -57,14 +56,16 @@ public class fadeableWindow : simpleWindow {
 
 	public void fadeIn(){
 		targetAlpha = 1.00f;
+		m_State = State.FADEIN;
 	}
 
 	public void fadeOut(){
 		targetAlpha = 0.00f;
+		m_State = State.FADEOUT;
 	}
 
 	public void blinkSpeed() {
-		alphaspeed = 0.15f;
+		alphaspeed = 0.2f;
 	}
 
 	public void fadeNormallySpeed(){
