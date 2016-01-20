@@ -22,7 +22,7 @@ public class titleScreen : MonoBehaviour {
 	void Start () {
 		m_state = State.START;
 		buttonStatus = 2;
-		StartCoroutine (beginFirstFadeIn (2.0f)); 
+		StartCoroutine (beginFirstFadeIn (1.5f)); 
 	}
 	
 	// Update is called once per frame
@@ -30,11 +30,12 @@ public class titleScreen : MonoBehaviour {
 		if(m_state == State.WAIT) fadeButton ();
 		if(m_state == State.PROCEED) blinkButton ();
 
-		if (m_state == State.WAIT && Input.touchCount > 0 || Input.GetMouseButton(0)) {
-			m_state = State.PROCEED;
-			StartCoroutine(goToNextScene(1.5f));
+		if (m_state == State.WAIT) {
+			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
+				m_state = State.PROCEED;
+				StartCoroutine (goToNextScene (1.5f));
+			}
 		}
-
 	}
 
 	public IEnumerator goToNextScene(float seconds){
@@ -48,7 +49,8 @@ public class titleScreen : MonoBehaviour {
 	}
 
 	public void nextScene(){
-
+		//Switch to next scene. 1 is for new user and 2 is for HOME.
+		Application.LoadLevel (2);
 	}
 
 	//Do this right after tapping the screen before changing to FADEOUT to change scene

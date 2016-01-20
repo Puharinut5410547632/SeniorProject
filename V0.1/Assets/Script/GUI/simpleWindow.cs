@@ -39,4 +39,10 @@ public class simpleWindow : MonoBehaviour {
 
 		return new Rect (rectX, rectY, rectWidth, rectHeight);
 	}
+
+	public Rect getContentRect()
+
+	{
+		return m_DrawArea;
+	}
 }
