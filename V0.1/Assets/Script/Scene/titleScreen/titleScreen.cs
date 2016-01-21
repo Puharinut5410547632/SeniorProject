@@ -16,6 +16,11 @@ public class titleScreen : MonoBehaviour {
 		FADE, //Screen fades to black.
 		END, //Change scene. To 1 if it's a new user. To 2 if it's an old user.
 	};
+	
+	//For sound
+	private AudioSource source;
+	public string audioPath;
+	public AudioClip audioSE;
 
 
 	// Use this for initialization
@@ -23,6 +28,15 @@ public class titleScreen : MonoBehaviour {
 		m_state = State.START;
 		buttonStatus = 2;
 		StartCoroutine (beginFirstFadeIn (1.5f)); 
+
+		if (audioPath != "") {
+			source = GetComponent<AudioSource>();
+			audioSE = Resources.Load (audioPath) as AudioClip;
+			source.clip = audioSE;
+			source.Play ();
+			source.loop = true;
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -32,6 +46,7 @@ public class titleScreen : MonoBehaviour {
 
 		if (m_state == State.WAIT) {
 			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
+				tapButton.playSound ();
 				m_state = State.PROCEED;
 				StartCoroutine (goToNextScene (1.5f));
 			}

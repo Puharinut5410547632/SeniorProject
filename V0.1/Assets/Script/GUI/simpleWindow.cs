@@ -11,13 +11,21 @@ public class simpleWindow : MonoBehaviour {
 	public Rect m_DrawArea;
 	public int depth = 10;	
 	public float speed = 10;
-	
+	//For sound
+	private AudioSource source;
+	public string audioPath;
+	public AudioClip audioSE;
+
 	// Load texture and use it as background
 	void Start () {
 		if (m_texturePath != "")
 			m_texture = Resources.Load (m_texturePath) as Texture;
 		m_DrawArea = resizeGUI (m_DrawArea);
 
+		if (audioPath != "") {
+			source = GetComponent<AudioSource>();
+			audioSE = Resources.Load (audioPath) as AudioClip;
+		}
 	}
 
 	void OnGUI(){
@@ -45,4 +53,8 @@ public class simpleWindow : MonoBehaviour {
 	{
 		return m_DrawArea;
 	}
+
+	public void playSound(){
+		source.PlayOneShot (audioSE);
+	}	
 }
