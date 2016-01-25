@@ -6,6 +6,9 @@ using System.Collections;
 public class simpleWindow : MonoBehaviour {
 	
 	//basic informations
+	//If you place this on a BG, add the BG into the script so that it can use
+	//the GUI Layout for auto scale and repositioning.
+	public simpleWindow m_parent = null;
 	public string m_texturePath;
 	public Texture m_texture;
 	public Rect m_DrawArea;
@@ -29,8 +32,13 @@ public class simpleWindow : MonoBehaviour {
 	}
 
 	void OnGUI(){
+
+		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
+
 		GUI.depth = depth;
 		GUI.DrawTexture (m_DrawArea, m_texture);
+
+		if(m_parent != null) GUILayout.EndArea ();
 	}
 
 
