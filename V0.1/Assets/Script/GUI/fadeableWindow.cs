@@ -7,12 +7,13 @@ public class fadeableWindow : simpleWindow {
 	public float alpha;
 	public float targetAlpha {get; set;}
 	public float alphaspeed { get; set; }
-
+	public enemyLabel m_enelabel;
 	public State m_State;
 	public enum State
 	{
 		FADEIN,		// Fade in
 		FADEOUT,	// Fade out
+		DISPLAY, 	// Just for displaying
 	};
 
 	// Update is called once per frame
@@ -27,16 +28,31 @@ public class fadeableWindow : simpleWindow {
 			fadeOut ();
 			setOpacity ();
 		}
+
 	}
 
 	void OnGUI(){
+		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 
-		GUI.color = new Color(1,1,1,alpha);
+		if (m_enelabel != null) {
+			getEneLabelLocation ();
+			GUI.color = new Color(1,1,1,alpha* getLabelOpacity());
+		}
+
+		if (m_enelabel == null)GUI.color = new Color(1,1,1,alpha);
 		GUI.depth = depth;
 		GUI.DrawTexture (m_DrawArea, m_texture);
 		GUI.Box (m_DrawArea, "" , GUIStyle.none);
 		GUI.color = Color.white;
+		if (m_parent != null) GUILayout.EndArea ();
+	}
 
+	public float getLabelOpacity(){
+		return m_enelabel.getOpacity ();
+	}
+	public void getEneLabelLocation(){
+		m_DrawArea.x = m_enelabel.getContentRect ().x;
+		m_DrawArea.y = m_enelabel.getContentRect ().y;
 	}
 	public void setOpacity(){
 		

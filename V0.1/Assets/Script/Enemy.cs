@@ -10,6 +10,8 @@ public class Enemy : Character {
 	public int e_hp;
 	public int e_mp;
 	public int e_level;
+	public enemyLabel label;
+	public fadeableWindow labelArea;
 
 	// Use this for initialization
 	void Start () {
@@ -24,10 +26,7 @@ public class Enemy : Character {
 		job = "Monster";
 		side = "Enemy";
 		level = e_level;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+		drawCharacter ();
 	
 	}
 

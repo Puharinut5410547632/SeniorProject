@@ -24,6 +24,7 @@ public class sceneChangeButton : simpleWindow {
 
 		//Trigger for pressing on the button
 		if (Input.GetMouseButtonDown (0) && m_DrawArea.Contains (Event.current.mousePosition) && buttonPressed == false){
+			playSound ();
 			buttonPressed = true;
 			StartCoroutine (goToNextScene(0.2f,nextSceneID));
 		}
@@ -45,4 +46,12 @@ public class sceneChangeButton : simpleWindow {
 		Debug.Log ("MOVING ON TO NEXT SCENE");
 		changeScene (id );
 	}
+
+	public void playSound(){
+		if (audioPath != "") {
+			source = GetComponent<AudioSource>();
+			audioSE = Resources.Load (audioPath) as AudioClip;
+		}
+		source.PlayOneShot (audioSE);
+	}	
 }

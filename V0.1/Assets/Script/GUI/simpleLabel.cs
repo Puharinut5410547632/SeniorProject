@@ -2,13 +2,12 @@
 using System.Collections;
 
 public class simpleLabel : simpleWindow {
-
-
+	
 	public string label = "";
-	public int fontSize = 16;
+	public float fontSize = 16;
 	public AlignmentSetting alignment;
 	public GUIStyle labelStyle;
-
+	public bool fontSizeAdjusted = false;
 	//Set where the text start
 	public enum AlignmentSetting{
 		LEFT,
@@ -21,13 +20,19 @@ public class simpleLabel : simpleWindow {
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		adjustFontSize ();
 		adjustAlignment ();
+		setLocation ();
 		GUI.Label(m_DrawArea, label,labelStyle);
-
 		if(m_parent != null) GUILayout.EndArea ();
 	}
 
+	public void moveUp(){
+		speedY = recalculateY (5.0f);
+		targetY = defaultY - recalculateY (100.0f);
+	}
+
 	public void adjustFontSize(){
-		labelStyle.fontSize = fontSize;
+		if(fontSizeAdjusted == false ){changeFontSize(); fontSizeAdjusted = true;}
+		labelStyle.fontSize = (int) fontSize;
 	}
 
 	public void adjustAlignment(){
@@ -38,4 +43,11 @@ public class simpleLabel : simpleWindow {
 		if (alignment == AlignmentSetting.CENTER)
 			labelStyle.alignment = TextAnchor.MiddleCenter;
 	}
+
+	public void changeFontSize(){
+		
+		fontSize = fontSize* Screen.height / 1280.000f;
+	}
+
+
 }
