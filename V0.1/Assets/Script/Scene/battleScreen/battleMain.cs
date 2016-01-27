@@ -96,4 +96,21 @@ public class battleMain : MonoBehaviour {
 		else
 			Destroy (newEne);
 	}
+
+	//Stop the BGM, display announcement and get ready to end the battle
+	public void endBattleWin(){
+		m_stage.endSound ();
+		GameObject obj = Instantiate(Resources.Load ("Prefab/winBanner")) as GameObject;
+		obj.GetComponent<simpleWindow> ().setTargetX (0);
+		playSound ("Audio/bgm/stageWin");
+		StartCoroutine (endBattle());
+	}
+
+	//End the battle by changing scene and fading everything to black.
+	public IEnumerator endBattle(){
+		yield return new WaitForSeconds (5.0f);
+		GameObject obj = Instantiate(Resources.Load ("Prefab/sceneChangeButton")) as GameObject;
+		sceneChangeButton button = obj.GetComponent<sceneChangeButton> ();
+		button.StartCoroutine (button.goToNextScene(0.2f,5));
+	}
 }

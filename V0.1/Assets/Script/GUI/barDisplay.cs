@@ -19,7 +19,6 @@ public class barDisplay : simpleWindow {
 		doStart ();
 		m_barFillRect = resizeGUI (m_barFillRect);
 		m_parent = m_target.m_parent;
-		Debug.Log (m_target.name);
 		if (m_role == "HP") {
 			m_max = m_target.maxHP;
 			m_current = m_target.currentHP;

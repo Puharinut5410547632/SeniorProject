@@ -34,7 +34,7 @@ public class simpleWindow : MonoBehaviour {
 			m_texture = Resources.Load (m_texturePath) as Texture;
 		m_DrawArea = resizeGUI (m_DrawArea);
 		setDefault ();
-
+		recalculateSpeedX (speed);
 		if (audioPath != "") {
 			source = GetComponent<AudioSource>();
 			audioSE = Resources.Load (audioPath) as AudioClip;
@@ -46,7 +46,7 @@ public class simpleWindow : MonoBehaviour {
 			m_texture = Resources.Load (m_texturePath) as Texture;
 		m_DrawArea = resizeGUI (m_DrawArea);
 		setDefault ();
-		
+		recalculateSpeedX (speed);
 		if (audioPath != "") {
 			source = GetComponent<AudioSource>();
 			audioSE = Resources.Load (audioPath) as AudioClip;
@@ -133,6 +133,31 @@ public class simpleWindow : MonoBehaviour {
 			source.loop = true;
 		}
 
+	}
+
+	public void endSound(){
+		source.Stop ();
+	}
+
+	public void setLocationX(float x){
+		m_DrawArea.x = recalculateX (x);
+	}
+
+	public void setLocationY(float y){
+		m_DrawArea.x = recalculateX (y);
+	}
+
+	public void setTargetX(float x){
+		targetX = recalculateX (x);
+	}
+	
+	public void setTargetY(float y){
+		targetY = recalculateX (y);
+	}
+
+	public void recalculateSpeedX(float newSpeed){
+		float widthScale = Screen.width / 800.00f;
+		speedX = widthScale * newSpeed;
 	}
 
 }
