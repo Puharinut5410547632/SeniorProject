@@ -20,7 +20,7 @@ public class fadeableWindow : simpleWindow {
 	void Update () {
 		fadeNormallySpeed ();
 		if (m_State == State.FADEIN){
-			fadeIn ();
+			fadeIn (targetAlpha);
 			setOpacity ();
 		}
 
@@ -51,8 +51,8 @@ public class fadeableWindow : simpleWindow {
 		return m_enelabel.getOpacity ();
 	}
 	public void getEneLabelLocation(){
-		m_DrawArea.x = m_enelabel.getContentRect ().x;
-		m_DrawArea.y = m_enelabel.getContentRect ().y;
+		m_DrawArea.x = m_enelabel.getContentRect().x + (m_enelabel.enemy.m_DrawArea.width - m_DrawArea.width)/2.0f;
+		m_DrawArea.y = m_enelabel.getContentRect().y;
 	}
 	public void setOpacity(){
 		
@@ -78,6 +78,11 @@ public class fadeableWindow : simpleWindow {
 	public void fadeOut(){
 		targetAlpha = 0.00f;
 		m_State = State.FADEOUT;
+	}
+
+	public void fadeIn(float newAlpha){
+		targetAlpha = newAlpha;
+		m_State = State.FADEIN;
 	}
 
 	public void blinkSpeed() {

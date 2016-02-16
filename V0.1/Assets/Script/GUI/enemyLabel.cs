@@ -12,6 +12,8 @@ public class enemyLabel : MonoBehaviour {
 	public bool fontSizeAdjusted = false;
 	public GUIStyle labelStyle;
 	public Rect m_DrawArea;
+	public float maxWidth = 800.00f;
+	public float maxHeight = 1600.00f;
 	public float alpha { get; set;}
 	//Set where the text start
 	public enum AlignmentSetting{
@@ -22,23 +24,34 @@ public class enemyLabel : MonoBehaviour {
 
 	void Start(){
 		alignment = AlignmentSetting.CENTER;
-		getEnemy ();
 		m_DrawArea = resizeGUI (m_DrawArea);
 		m_DrawArea.x = enemy.getRectX ();
+		m_DrawArea.width = enemy.m_DrawArea.width;
+		getEnemy ();
 	}
-
+	
 	void OnGUI(){
 
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		GUI.depth = depth;
 		getEneOpacity ();
 		GUI.color = new Color(1,1,1,alpha);
-		adjustFontSize ();
+	//	adjustFontSize ();
 		adjustAlignment ();
-		GUI.Label(m_DrawArea, label,labelStyle);
+		GUI.Label(resizeByParty(), label,labelStyle);
 		GUI.color = Color.white;
 		if(m_parent != null) GUILayout.EndArea ();
 	}
+
+	public Rect resizeByParty(){
+		Rect partyRect = m_DrawArea;
+		partyRect.height = m_DrawArea.height / enemy.partySize;
+		partyRect.width = m_DrawArea.width / enemy.partySize;
+		partyRect.x = m_DrawArea.x + (m_DrawArea.width - m_DrawArea.width/enemy.partySize)/2.0f ;
+		partyRect.y = m_DrawArea.y + (m_DrawArea.height - m_DrawArea.height/enemy.partySize)/2.0f ;
+		return partyRect;
+	}
+	
 
 	public void getEneOpacity(){
 		alpha = enemy.getOpacity();
@@ -47,15 +60,16 @@ public class enemyLabel : MonoBehaviour {
 	public float getOpacity(){
 		return alpha;
 	}
+
 	//Receive information from selected enemy.
 	public void getEnemy(){
-		label = "LV. " + enemy.level + "  " + enemy.name ;
-	//	label = "<color=white>LV. " + enemy.level + "  " + enemy.name + "</color>";
+		label = "LV. " + enemy.level + "  " + enemy.charName ;
 	}
 	
 	public void adjustFontSize(){
 		if(fontSizeAdjusted == false ){changeFontSize(); fontSizeAdjusted = true;}
-		labelStyle.fontSize = (int) fontSize;
+		if(enemy.partySize >= 1 )
+		labelStyle.fontSize = (int) (fontSize / enemy.partySize*0.8);
 	}
 	
 	public void adjustAlignment(){
@@ -69,8 +83,8 @@ public class enemyLabel : MonoBehaviour {
 
 	public Rect resizeGUI(Rect Drect){
 		
-		float widthScale = Screen.width / 800.00f;
-		float heightScale = Screen.height / 1280.000f;
+		float widthScale = Screen.width / maxWidth;
+		float heightScale = Screen.height / maxHeight;
 		
 		float rectWidth = widthScale * Drect.width;
 		float rectHeight = heightScale * Drect.height;
@@ -89,6 +103,6 @@ public class enemyLabel : MonoBehaviour {
 
 	public void changeFontSize(){
 
-		fontSize = fontSize* Screen.height / 1280.000f;
+		fontSize = fontSize* Screen.height / maxHeight;
 	}
 }

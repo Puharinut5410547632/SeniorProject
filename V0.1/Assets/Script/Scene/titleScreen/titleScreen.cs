@@ -46,6 +46,7 @@ public class titleScreen : MonoBehaviour {
 
 		if (m_state == State.WAIT) {
 			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
+				tapButton.alpha = 1.0f;
 				tapButton.playSound ();
 				m_state = State.PROCEED;
 				StartCoroutine (goToNextScene (1.5f));

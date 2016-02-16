@@ -8,45 +8,49 @@ public class barDisplay : simpleWindow {
 	public float m_max;
 	public float m_current;
 	public float multiplier;
-	public Texture m_color;
-	public string m_colorPath;
-	public Rect m_barFillRect;
+//	public Texture m_color;
+//	public string m_colorPath;
+//	public Rect m_barFillRect;
 	public float alpha;
+	public fadeableWindow bar;
 	// Use this for initialization
 	void Start () {
-		m_DrawArea.x = m_target.xBeforeResize;
-		m_barFillRect.x = m_DrawArea.x + 10.0f;
+		m_DrawArea.x  = m_target.m_DrawArea.x;
+		//m_barFillRect.x = m_DrawArea.x + recalculateX(20.0f);
 		doStart ();
-		m_barFillRect = resizeGUI (m_barFillRect);
+		m_DrawArea = resizeGUI (m_DrawArea);
 		m_parent = m_target.m_parent;
+		bar.m_parent = m_parent;
+
 		if (m_role == "HP") {
 			m_max = m_target.maxHP;
 			m_current = m_target.currentHP;
-			m_colorPath = "Texture/green";
+			m_texturePath = "Texture/green";
 		}
 
 		if (m_role == "MP") {
 	//		m_max = m_target.maxMP;
 	//		m_current = m_target.currentMP;
-			m_colorPath = "Texture/blue";
+			m_texturePath = "Texture/blue";
 		}
 
 		if (m_role == "AP") {
 	//		m_max = m_target.maxMP;
 	//		m_current = m_target.currentMP;
-			m_colorPath = "Texture/blue";
+			m_texturePath = "Texture/blue";
 		}
 
-		if (m_colorPath != "")
-			m_color = Resources.Load (m_colorPath) as Texture;
+		if (m_texturePath != "")
+			m_texture = Resources.Load (m_texturePath) as Texture;
 	}
 
 	void OnGUI(){
+		m_DrawArea.x = m_target.m_enemyLabel.m_DrawArea.x;
+		m_DrawArea.width= m_target.m_enemyLabel.m_DrawArea.width;
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		GUI.depth = depth;
 		GUI.color = new Color(1,1,1,alpha);
-		GUI.DrawTexture (m_DrawArea,  m_texture);
-		GUI.DrawTexture (barFillPercent (), m_color);
+		GUI.DrawTexture (barFillPercent (), m_texture);
 		GUI.color = Color.white;
 		if(m_parent != null) GUILayout.EndArea ();
 
@@ -54,6 +58,8 @@ public class barDisplay : simpleWindow {
 
 	// Update is called once per frame
 	void Update () {
+		bar.m_DrawArea = m_DrawArea;
+		bar.alpha = alpha;
 		if (m_role == "HP")  m_current = m_target.currentHP;
 		if (m_role == "MP")  m_current = m_target.currentAP;
 		if (m_role == "AP")  m_current = m_target.currentMP;
@@ -66,8 +72,8 @@ public class barDisplay : simpleWindow {
 	//Return size of current % of value left in the bar.
 	public Rect barFillPercent(){
 
-		Rect newRect = m_barFillRect;
-		newRect.width = m_barFillRect.width * multiplier;
+		Rect newRect = m_DrawArea;
+		newRect.width = m_DrawArea.width * multiplier;
 
 		return newRect;
 	}

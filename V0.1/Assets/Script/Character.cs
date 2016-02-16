@@ -5,7 +5,7 @@ public class Character : MonoBehaviour {
 
 	//All the status
 	private long uID { get; set; }
-	public string name { get; set; }
+	public string charName { get; set; }
 	public int level{get; set;}
 	public int attackPower { get; set; }
 	public int magicAttackPower { get; set; }
@@ -26,10 +26,13 @@ public class Character : MonoBehaviour {
 	//for GUI purpose
 	public int depth;
 	public simpleWindow m_parent = null;
+
 	public string m_texturePath;
 	public Texture m_texture;
+	public enemyLabel m_enemyLabel = null;
 	//special x case required for moving number label damage.
 	public float xBeforeResize;
+	public float widthBeforeResize;
 	public Rect m_DrawArea;
 	public float alpha;
 	public float targetAlpha{get; set;}
@@ -50,37 +53,43 @@ public class Character : MonoBehaviour {
 	private AudioSource source;
 	public string audioPath;
 	public AudioClip audioSE;
+
+	public float maxWidth = 800.00f;
+	public float maxHeight = 1280.00f;
 	
 	void Start()	{
+		m_DrawArea = resizeParty ();
 		xBeforeResize = m_DrawArea.x;
+		widthBeforeResize = m_DrawArea.width;
 		alive ();
 		if (m_texturePath != "")
 			m_texture = Resources.Load (m_texturePath) as Texture;
 		m_DrawArea = resizeGUI (m_DrawArea);
-		//Size of the picture is reduced based on size of party (usually for displaying enemies)
-		m_DrawArea = resizeParty ();
+
 		defaultX = m_DrawArea.x;
 		defaultY = m_DrawArea.y;
 	}
 
 	public void drawCharacter(){
+		m_DrawArea = resizeParty ();
 		xBeforeResize = m_DrawArea.x;
+		widthBeforeResize = m_DrawArea.width;
 		alive ();
 		if (m_texturePath != "")
 			m_texture = Resources.Load (m_texturePath) as Texture;
 		m_DrawArea = resizeGUI (m_DrawArea);
 		//Size of the picture is reduced based on size of party (usually for displaying enemies)
-		m_DrawArea = resizeParty ();
+//		m_DrawArea = resizeParty ();
 		defaultX = m_DrawArea.x;
 		defaultY = m_DrawArea.y;
 	}
 
 	void OnGUI(){
-		
+
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		GUI.depth = depth;
 		GUI.color = new Color(1,1,1,alpha);
-		GUI.DrawTexture (resizeParty (), m_texture);
+		GUI.DrawTexture (m_DrawArea, m_texture);
 		GUI.color = Color.white;
 		if(m_parent != null) GUILayout.EndArea ();
 	}
@@ -92,7 +101,7 @@ public class Character : MonoBehaviour {
 			die ();
 		}
 		if (isAlive == false && shake == false) {
-//			StartCoroutine(shaking());
+
 		}
 	}
 
@@ -151,7 +160,7 @@ public class Character : MonoBehaviour {
 	}
 
 	public void fadeAway (){
-		alphaspeed = 0.015f;
+		alphaspeed = 0.04f;
 		targetAlpha = 0.00f;
 		speedX = recalculateX (20.0f);
 	}
@@ -165,7 +174,13 @@ public class Character : MonoBehaviour {
 
 		float newRectHeight = m_DrawArea.width / partySize;
 		float newRectWidth = m_DrawArea.height / partySize;
-		return new Rect (m_DrawArea.x , m_DrawArea.y, newRectHeight, newRectWidth);
+//		float newRectX = m_DrawArea.x + (m_DrawArea.width - newRectWidth) / 2.0f;
+		float newRectY = m_DrawArea.y + (m_DrawArea.height - newRectHeight);
+		//For boss
+		if (partySize <= 1.0f)
+			newRectY = m_DrawArea.y;
+//		Debug.Log ("X: " + newRectX);
+		return new Rect (m_DrawArea.x , newRectY, newRectHeight, newRectWidth);
 	}
 	public void die()	{
 		isAlive = false;
@@ -175,7 +190,7 @@ public class Character : MonoBehaviour {
 			playSound ("Audio/se/monDie");
 			fadeAway ();
 		}
-		Destroy(this.gameObject,1.5f);
+		Destroy(this.gameObject,0.7f);
 	}
 	
 	public void alive()	{
@@ -187,6 +202,7 @@ public class Character : MonoBehaviour {
 	
 	public void isHurt(int hurt){
 		currentHP -= hurt;
+		createDamageLabel (hurt);
 		if (side == "Enemy")
 			StartCoroutine (getHit ());
 	}
@@ -207,8 +223,8 @@ public class Character : MonoBehaviour {
 
 	public Rect resizeGUI(Rect Drect){
 		
-		float widthScale = Screen.width / 800.00f;
-		float heightScale = Screen.height / 1280.000f;
+		float widthScale = Screen.width / maxWidth;
+		float heightScale = Screen.height / maxHeight;
 		
 		float rectWidth = widthScale * Drect.width;
 		float rectHeight = heightScale * Drect.height;
@@ -221,12 +237,12 @@ public class Character : MonoBehaviour {
 
 	public float recalculateX( float x){
 
-		return x*Screen.width / 1600.00f;
+		return x*Screen.width / maxWidth;
 	}
 
 	public float recalculateY( float y){
 		
-		return y*Screen.height / 2560.000f;
+		return y*Screen.height / maxHeight;
 	}
 
 	public Rect getContentRect(){
@@ -251,5 +267,17 @@ public class Character : MonoBehaviour {
 		}
 		source.PlayOneShot (audioSE);
 	}	
+
+	public void createDamageLabel(int damage){
+			
+			GameObject obj = Instantiate (Resources.Load ("Prefab/damageLabel")) as GameObject;
+			simpleLabel number = obj.GetComponent<simpleLabel> ();
+			number.m_DrawArea.width = number.m_DrawArea.width/partySize;
+			number.m_DrawArea.x = xBeforeResize;
+			number.label = "<color=red>" + damage + "</color>";
+			number.moveUp ();
+			Destroy (obj, 0.5f);
+			
+		}
 
 }
