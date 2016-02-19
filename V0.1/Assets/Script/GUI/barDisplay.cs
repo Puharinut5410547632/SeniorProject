@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 
 public class barDisplay : simpleWindow {
@@ -8,17 +8,12 @@ public class barDisplay : simpleWindow {
 	public float m_max;
 	public float m_current;
 	public float multiplier;
-//	public Texture m_color;
-//	public string m_colorPath;
-//	public Rect m_barFillRect;
 	public float alpha;
 	public fadeableWindow bar;
 	// Use this for initialization
 	void Start () {
-		m_DrawArea.x  = m_target.m_DrawArea.x;
-		//m_barFillRect.x = m_DrawArea.x + recalculateX(20.0f);
+		if ( m_target.m_enemyLabel != null)	m_DrawArea.x  = m_target.m_DrawArea.x;
 		doStart ();
-		m_DrawArea = resizeGUI (m_DrawArea);
 		m_parent = m_target.m_parent;
 		bar.m_parent = m_parent;
 
@@ -28,15 +23,9 @@ public class barDisplay : simpleWindow {
 			m_texturePath = "Texture/green";
 		}
 
-		if (m_role == "MP") {
-	//		m_max = m_target.maxMP;
-	//		m_current = m_target.currentMP;
-			m_texturePath = "Texture/blue";
-		}
-
 		if (m_role == "AP") {
-	//		m_max = m_target.maxMP;
-	//		m_current = m_target.currentMP;
+			m_max = m_target.maxAP;
+			m_current = m_target.currentAP;
 			m_texturePath = "Texture/blue";
 		}
 
@@ -45,12 +34,16 @@ public class barDisplay : simpleWindow {
 	}
 
 	void OnGUI(){
-		m_DrawArea.x = m_target.m_enemyLabel.m_DrawArea.x;
-		m_DrawArea.width= m_target.m_enemyLabel.m_DrawArea.width;
+		//In case of using this on enemy
+		if (m_target.m_enemyLabel != null) {
+			m_DrawArea.x = m_target.m_enemyLabel.m_DrawArea.x;
+			m_DrawArea.width = m_target.m_enemyLabel.widthPartySize ();
+		}
+
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		GUI.depth = depth;
 		GUI.color = new Color(1,1,1,alpha);
-		GUI.DrawTexture (barFillPercent (), m_texture);
+		GUI.DrawTexture (resizeGUI(barFillPercent ()), m_texture);
 		GUI.color = Color.white;
 		if(m_parent != null) GUILayout.EndArea ();
 
@@ -61,8 +54,7 @@ public class barDisplay : simpleWindow {
 		bar.m_DrawArea = m_DrawArea;
 		bar.alpha = alpha;
 		if (m_role == "HP")  m_current = m_target.currentHP;
-		if (m_role == "MP")  m_current = m_target.currentAP;
-		if (m_role == "AP")  m_current = m_target.currentMP;
+		if (m_role == "AP")  m_current = m_target.currentAP;
 		if (m_current < 0)
 			m_current = 0;
 		multiplier = m_current / m_max;

@@ -11,8 +11,8 @@ public class commandButton : simpleWindow {
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		
 		GUI.depth = depth;
-		GUI.DrawTexture (m_DrawArea, m_texture);
-		if (GUI.Button (m_DrawArea, "", GUIStyle.none))
+		GUI.DrawTexture (resizeGUI (m_DrawArea), m_texture);
+		if (GUI.Button (resizeGUI (m_DrawArea), "", GUIStyle.none))
 			sendMessage (receiverObject, commandMessage);
 		
 		if(m_parent != null) GUILayout.EndArea ();

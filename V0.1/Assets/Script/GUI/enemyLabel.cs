@@ -12,8 +12,8 @@ public class enemyLabel : MonoBehaviour {
 	public bool fontSizeAdjusted = false;
 	public GUIStyle labelStyle;
 	public Rect m_DrawArea;
-	public float maxWidth = 800.00f;
-	public float maxHeight = 1600.00f;
+	public float maxWidth = 1080.00f;
+	public float maxHeight = 1920.00f;
 	public float alpha { get; set;}
 	//Set where the text start
 	public enum AlignmentSetting{
@@ -24,7 +24,6 @@ public class enemyLabel : MonoBehaviour {
 
 	void Start(){
 		alignment = AlignmentSetting.CENTER;
-		m_DrawArea = resizeGUI (m_DrawArea);
 		m_DrawArea.x = enemy.getRectX ();
 		m_DrawArea.width = enemy.m_DrawArea.width;
 		getEnemy ();
@@ -36,9 +35,9 @@ public class enemyLabel : MonoBehaviour {
 		GUI.depth = depth;
 		getEneOpacity ();
 		GUI.color = new Color(1,1,1,alpha);
-	//	adjustFontSize ();
+		adjustFontSize ();
 		adjustAlignment ();
-		GUI.Label(resizeByParty(), label,labelStyle);
+		GUI.Label(resizeGUI(resizeByParty()), label,labelStyle);
 		GUI.color = Color.white;
 		if(m_parent != null) GUILayout.EndArea ();
 	}
@@ -47,7 +46,7 @@ public class enemyLabel : MonoBehaviour {
 		Rect partyRect = m_DrawArea;
 		partyRect.height = m_DrawArea.height / enemy.partySize;
 		partyRect.width = m_DrawArea.width / enemy.partySize;
-		partyRect.x = m_DrawArea.x + (m_DrawArea.width - m_DrawArea.width/enemy.partySize)/2.0f ;
+	//	partyRect.x = m_DrawArea.x + (m_DrawArea.width - m_DrawArea.width/enemy.partySize)/2.0f ;
 		partyRect.y = m_DrawArea.y + (m_DrawArea.height - m_DrawArea.height/enemy.partySize)/2.0f ;
 		return partyRect;
 	}
@@ -105,4 +104,10 @@ public class enemyLabel : MonoBehaviour {
 
 		fontSize = fontSize* Screen.height / maxHeight;
 	}
+
+	public float widthPartySize(){
+
+		return m_DrawArea.width / enemy.partySize;
+	}
+
 }

@@ -14,8 +14,8 @@ public class simpleWindow : MonoBehaviour {
 	public Rect m_DrawArea;
 	public int depth = 10;	
 	public float speed = 10;
-	public float maxWidth = 800.00f;
-	public float maxHeight = 1280.00f;
+	public float maxWidth = 1080.00f;
+	public float maxHeight = 1920.00f;
 	//For sound
 	public AudioSource source;
 	public string audioPath;
@@ -34,9 +34,7 @@ public class simpleWindow : MonoBehaviour {
 	void Start () {
 		if (m_texturePath != "")
 			m_texture = Resources.Load (m_texturePath) as Texture;
-		m_DrawArea = resizeGUI (m_DrawArea);
 		setDefault ();
-	//	recalculateSpeedX (speed);
 		if (audioPath != "") {
 			source = GetComponent<AudioSource>();
 			audioSE = Resources.Load (audioPath) as AudioClip;
@@ -46,7 +44,6 @@ public class simpleWindow : MonoBehaviour {
 	public void doStart(){
 		if (m_texturePath != "")
 			m_texture = Resources.Load (m_texturePath) as Texture;
-		m_DrawArea = resizeGUI (m_DrawArea);
 		setDefault ();
 		if (audioPath != "") {
 			source = GetComponent<AudioSource>();
@@ -59,7 +56,7 @@ public class simpleWindow : MonoBehaviour {
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 		setLocation ();
 		GUI.depth = depth;
-		GUI.DrawTexture (m_DrawArea, m_texture);
+		GUI.DrawTexture (resizeGUI (m_DrawArea), m_texture);
 
 		if(m_parent != null) GUILayout.EndArea ();
 	}
@@ -91,19 +88,19 @@ public class simpleWindow : MonoBehaviour {
 
 	public float recalculateX( float x){
 		
-		return x*Screen.width / 800.00f;
+		return x * Screen.width / maxWidth;
 	}
 	
 	public float recalculateY( float y){
 		
-		return y*Screen.height / 1280.000f;
+		return y * Screen.height / maxHeight;
 	}
 
 
 	public Rect resizeGUI(Rect Drect){
 	
-		float widthScale = Screen.width / 800.00f;
-		float heightScale = Screen.height / 1280.000f;
+		float widthScale = Screen.width / maxWidth;
+		float heightScale = Screen.height / maxHeight;
 
 		float rectWidth = widthScale * Drect.width;
 		float rectHeight = heightScale * Drect.height;
@@ -175,7 +172,7 @@ public class simpleWindow : MonoBehaviour {
 	}
 
 	public void recalculateSpeedX(float newSpeed){
-		float widthScale = Screen.width / 800.00f;
+		float widthScale = Screen.width / maxWidth;
 		speedX = widthScale * newSpeed;
 	}
 

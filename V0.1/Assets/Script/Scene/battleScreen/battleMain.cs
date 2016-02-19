@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 public class battleMain : MonoBehaviour {
 
+	//List for Enemies and Players to be used.
 	public List<Enemy> enemies = new List<Enemy>();
+	public List<playerChar> players = new List<playerChar> ();
+	public playerChar selectedCharacter;
 	public commandButton m_commandButton;
 	public simpleWindow m_stage;
 	//Current wave on enemy the player is on
@@ -12,7 +15,8 @@ public class battleMain : MonoBehaviour {
 	public Turn m_turn;
 	//0 = no spawn yet, 1 = get ready to spawn, 2 = spawn next wave, 3 to check for enemy kill trigger
 	public int m_checkSpawn;
-
+	public int playerCharSlot;
+	public bool acted = false;
 	public enum Turn
 	{
 		WAIT, // Transitioning or no fight yet.
@@ -29,11 +33,16 @@ public class battleMain : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		playerCharSlot = 0;
 		m_stage.playSoundLoop ();
+		createPlayerTeam ();
+		//Always start at char one
+		createdSelectedCharacter ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		changeSelectedCharacter (playerCharSlot);
 		if (m_checkSpawn == 0) { m_checkSpawn = 1; StartCoroutine(waveSpawn());
 		}
 		if(m_checkSpawn == 2) {nextWave();}
@@ -44,6 +53,47 @@ public class battleMain : MonoBehaviour {
 	public IEnumerator waveSpawn(){
 		yield return new WaitForSeconds (3.0f);
 		m_checkSpawn = 2;
+	}
+
+	public void createdSelectedCharacter(){
+		GameObject newPlayer = Instantiate (Resources.Load ("Prefab/selectedCharacter")) as GameObject;
+		playerChar player = newPlayer.GetComponent<playerChar> ();
+		player.changeStatus (players [0]);
+		selectedCharacter = player;
+
+	}
+
+	public IEnumerator playNextChar(){
+		yield return new WaitForSeconds (0.7f);
+		acted = false;
+		playerCharSlot++;
+	}
+
+	//Go from 0 to 2 in order. If the character is dead, switch. This is done after the command is given.
+	//When reached 3, trigger end turn for player.
+	public void changeSelectedCharacter(int charSlot){
+		selectedCharacter.changeStatus (players[charSlot]);
+		selectedCharacter.displayCurrentCounter ();
+	}
+
+	public void createPlayerTeam(){
+		for (int i = 0; i<3; i++) {
+			playerChar player = createPlayer ();
+			player.m_DrawArea.x = 360*i;
+			player.healthBar.m_DrawArea.x = player.m_DrawArea.x;
+			player.apBar.m_DrawArea.x = player.m_DrawArea.x+180;
+			player.ultimateCounter.m_DrawArea.x = player.m_DrawArea.x + player.m_DrawArea.width - player.ultimateCounter.m_DrawArea.width;
+			player.ultimateCounter.m_DrawArea.y = player.m_DrawArea.y - player.ultimateCounter.m_DrawArea.height/2.0f;
+			players.Add (player);
+		}
+	}
+
+	public playerChar createPlayer(){
+
+		GameObject newPlayer = Instantiate (Resources.Load ("Prefab/characterTab")) as GameObject;
+		playerChar player = newPlayer.GetComponent<playerChar> ();
+		return player;
+
 	}
 
 	public void nextWave(){
@@ -69,11 +119,15 @@ public class battleMain : MonoBehaviour {
 	//Random hit
 	public void hitOne(){
 	if (m_turn == Turn.PLAYER) {
-			if(enemies.Count != 0){
+			if(enemies.Count != 0 && acted == false){
+				acted = true;
+				players[playerCharSlot].gainAP(10);
 			int rand = Random.Range (0, enemies.Count); 
 			playSound("Audio/se/atk1");
-			enemies[rand].isHurt (70);
-			endPlayerTurn();
+			enemies[rand].isHurt (40);
+			if(playerCharSlot == 2 ) endPlayerTurn();
+				if(playerCharSlot<2)	StartCoroutine(playNextChar());
+			
 
 			}
 		}
@@ -81,19 +135,24 @@ public class battleMain : MonoBehaviour {
 
 	//Hit everything
 	public void hitAll(){
-		if (m_turn == Turn.PLAYER) {
-
+		if (m_turn == Turn.PLAYER && players[playerCharSlot].currentUltimateCharge == 0 && acted == false) {
+			acted = true;
+			players[playerCharSlot].ultimateOnCD();
 			if(enemies.Count != 0){
 				for (int i = 0; i < enemies.Count; i++) {
-				enemies[i].isHurt (50);
+				enemies[i].isHurt (10);
 				}
 			}
-			endPlayerTurn();
+			if(playerCharSlot == 2 ) endPlayerTurn();
+			if(playerCharSlot<2)	StartCoroutine (playNextChar ());
 			playSound("Audio/se/atk1");
 		}
 	}
-
+	//Reduce ultimate counter too
 	public void endPlayerTurn(){
+		for (int i =0; i< 3; i++) {
+			players[i].reduceCounter(1);
+		}
 		StartCoroutine (switchTurn(Turn.ENEMY));
 	}
 
@@ -101,7 +160,10 @@ public class battleMain : MonoBehaviour {
 		StartCoroutine(endTest());
 	}
 
+
 	public void beginPlayerTurn(){
+		playerCharSlot = 0;
+		acted = false;
 		m_turn = Turn.PLAYER;
 	}
 
@@ -112,8 +174,32 @@ public class battleMain : MonoBehaviour {
 	}
 
 	public IEnumerator endTest(){
-		yield return new WaitForSeconds (0.2f);
+		for(int i = 0; i < enemies.Count; i++){
+			enemies[i].StartCoroutine (enemies[i].getHit ());
+			damagePlayer (40);
+			yield return new WaitForSeconds (1.0f);
+		}
 		StartCoroutine (switchTurn(Turn.PLAYER));
+
+	}
+
+	//Deal damage to player only if the char is alive.
+	public void damagePlayer(int damage){
+
+		if (checkPlayerAlive ()) {
+			int player = Random.Range (0, 3);
+			if (players [player].isAlive == true) {
+				players [player].isHurt (5);
+			} else
+				damagePlayer (damage);
+		}
+	}
+
+	public bool checkPlayerAlive(){
+		if (players [0].isAlive == false && players [1].isAlive == false && players [2].isAlive == false)
+			return false;
+		else 
+			return true;
 
 	}
 
@@ -167,12 +253,11 @@ public class battleMain : MonoBehaviour {
 				m_stage.playSoundLoop ("Audio/bgm/boss1");
 				Enemy enemy = createEnemy ("Dragon");
 				enemy.partySize = 0.85f;
-		//		Debug.Log ("e : " + enemy.m_DrawArea.width);
-		//		Debug.Log ("w : " + m_stage.m_DrawArea.width);
-				enemy.m_DrawArea.x = m_stage.m_DrawArea.width  * 0.33f;
+				enemy.m_DrawArea.x = enemy.m_DrawArea.width * 0.20f;
+				enemy.healthBar.m_DrawArea.y = m_stage.m_DrawArea.height * 0.20f;
 				enemies.Add (enemy);
 				playSound ("Audio/se/monSpawn");
-				m_turn = Turn.PLAYER;
+				beginPlayerTurn();
 			}
 		}
 	}
@@ -180,6 +265,7 @@ public class battleMain : MonoBehaviour {
 	public void spawnTwo(){
 		if (m_turn != Turn.OVER) {
 			if (enemies.Count == 0) {
+				beginPlayerTurn();
 				Enemy enemy1 = createEnemy("Droplet");
 				Enemy enemy2 = createEnemy("Droplet");
 				//Resize and move
@@ -191,14 +277,13 @@ public class battleMain : MonoBehaviour {
 				//Adjusting the label
 
 				enemy1.labelArea.m_DrawArea.width = (enemy1.m_DrawArea.width/enemy1.partySize) * 0.8f;
-				enemy1.labelArea.m_DrawArea.x += enemy1.labelArea.m_DrawArea.width * 0.5f;
-				enemy1.label.m_DrawArea.y += 50.0f;
-				enemy1.healthBar.m_DrawArea.y += 80.0f;
+				enemy1.label.m_DrawArea.y = m_stage.m_DrawArea.height * 0.15f;
+				enemy1.healthBar.m_DrawArea.y = m_stage.m_DrawArea.height * 0.25f;
 
 				enemies.Add(enemy2);
-				enemy2.label.m_DrawArea.y += 50.0f;
-				enemy2.healthBar.m_DrawArea.y += 80.0f;
 				enemy2.labelArea.m_DrawArea.width = (enemy2.m_DrawArea.width/enemy2.partySize) * 0.8f;
+				enemy2.label.m_DrawArea.y = m_stage.m_DrawArea.height * 0.15f;
+				enemy2.healthBar.m_DrawArea.y = m_stage.m_DrawArea.height * 0.25f;
 				playSound ("Audio/se/monSpawn");
 			}
 		}
@@ -208,41 +293,42 @@ public class battleMain : MonoBehaviour {
 
 		if (m_turn != Turn.OVER) {
 			if (enemies.Count == 0) {
+				beginPlayerTurn();
 				Enemy enemy1 = createEnemy("Droplet");
 				Enemy enemy2 = createEnemy("Droplet");
 				Enemy enemy3 = createEnemy("Droplet");
 				//Resize and move
 				float parSize = 2.2f;
-				float ymodification = 0f;
 
 				enemy1.partySize = parSize;
-				enemy1.m_DrawArea.x = 0.12f * enemy1.m_DrawArea.width/parSize;
-				enemy1.m_DrawArea.y = ymodification * enemy1.m_DrawArea.y;
+				enemy1.m_DrawArea.x = enemy1.m_DrawArea.width/parSize * 1.24f;
+				enemy1.m_DrawArea.y = m_stage.m_DrawArea.height * 0.1f;
 
 				enemy2.partySize = parSize;
-				enemy2.m_DrawArea.x = enemy2.m_DrawArea.width/parSize * 1.24f;
-				enemy2.m_DrawArea.y = ymodification * enemy2.m_DrawArea.y;
+				enemy2.m_DrawArea.x = enemy2.m_DrawArea.width/parSize * 0.12f;
+				enemy2.m_DrawArea.y = m_stage.m_DrawArea.height * 0.1f;
 
 				enemy3.partySize = parSize;
 				enemy3.m_DrawArea.x = enemy3.m_DrawArea.width/parSize * 2.36f;
-				enemy3.m_DrawArea.y = ymodification * enemy3.m_DrawArea.y;
+				enemy3.m_DrawArea.y = m_stage.m_DrawArea.height * 0.1f;
 
 				//Adjusting the label
 				enemies.Add(enemy1);
 				enemy1.labelArea.m_DrawArea.width = (enemy1.m_DrawArea.width/enemy1.partySize) * 0.8f;
-				enemy1.labelArea.m_DrawArea.x += enemy1.labelArea.m_DrawArea.width * 0.5f;
-				enemy1.label.m_DrawArea.y += 100.0f;
-				enemy1.healthBar.m_DrawArea.y += 150.0f;
+				enemy1.label.m_DrawArea.y = m_stage.m_DrawArea.height * 0.2f;
+				enemy1.healthBar.m_DrawArea.y = m_stage.m_DrawArea.height * 0.3f;
 
 				enemies.Add(enemy2);
-				enemy2.label.m_DrawArea.y += 100.0f;
-				enemy2.healthBar.m_DrawArea.y += 150.0f;
 				enemy2.labelArea.m_DrawArea.width = (enemy2.m_DrawArea.width/enemy2.partySize) * 0.8f;
+				enemy2.label.m_DrawArea.y = m_stage.m_DrawArea.height * 0.2f;
+				enemy2.healthBar.m_DrawArea.y = m_stage.m_DrawArea.height * 0.3f;
+
 
 				enemies.Add(enemy3);
-				enemy3.label.m_DrawArea.y += 100.0f;
-				enemy3.healthBar.m_DrawArea.y += 150.0f;
 				enemy3.labelArea.m_DrawArea.width = (enemy3.m_DrawArea.width/enemy3.partySize) * 0.8f;
+				enemy3.label.m_DrawArea.y = m_stage.m_DrawArea.height * 0.2f;
+				enemy3.healthBar.m_DrawArea.y = m_stage.m_DrawArea.height * 0.3f;
+
 				playSound ("Audio/se/monSpawn");
 			}
 		}

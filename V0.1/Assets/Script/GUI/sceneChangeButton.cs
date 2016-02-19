@@ -20,10 +20,10 @@ public class sceneChangeButton : simpleWindow {
 		if(m_parent != null) GUILayout.BeginArea(m_parent.getContentRect());
 
 		GUI.depth = depth;
-		GUI.DrawTexture (m_DrawArea, m_texture);
+		GUI.DrawTexture (resizeGUI (m_DrawArea), m_texture);
 
 		//Trigger for pressing on the button
-		if (Input.GetMouseButtonDown (0) && m_DrawArea.Contains (Event.current.mousePosition) && buttonPressed == false){
+		if (Input.GetMouseButtonDown (0) && resizeGUI(m_DrawArea).Contains (Event.current.mousePosition) && buttonPressed == false){
 			playOnceSound ();
 			buttonPressed = true;
 			StartCoroutine (goToNextScene(0.2f,nextSceneID));

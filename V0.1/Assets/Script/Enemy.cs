@@ -8,7 +8,7 @@ public class Enemy : Character {
 	public int e_magicAttackPower;
 	public int e_defense;
 	public int e_hp;
-	public int e_mp;
+	public int e_ap;
 	public int e_level;
 	public enemyLabel label;
 	public fadeableWindow labelArea;
@@ -21,15 +21,14 @@ public class Enemy : Character {
 		magicAttackPower = e_magicAttackPower;
 		defense = e_defense;
 		maxHP = e_hp;
-		maxMP = e_mp;
+		maxAP = e_ap;
 		currentHP = maxHP;
-		currentMP = maxMP;
+		currentAP = maxAP;
 		job = "Monster";
 		side = "Enemy";
 		level = e_level;
 		drawCharacter ();
-		labelArea.m_DrawArea.x = xBeforeResize;
-		widthBeforeResize = m_DrawArea.width;
+		labelArea.m_DrawArea.x = m_DrawArea.x;
 		m_enemyLabel = label;
 	}
 

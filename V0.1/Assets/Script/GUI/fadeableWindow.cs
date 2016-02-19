@@ -41,8 +41,8 @@ public class fadeableWindow : simpleWindow {
 
 		if (m_enelabel == null)GUI.color = new Color(1,1,1,alpha);
 		GUI.depth = depth;
-		GUI.DrawTexture (m_DrawArea, m_texture);
-		GUI.Box (m_DrawArea, "" , GUIStyle.none);
+		GUI.DrawTexture (resizeGUI (m_DrawArea), m_texture);
+		GUI.Box (resizeGUI (m_DrawArea), "" , GUIStyle.none);
 		GUI.color = Color.white;
 		if (m_parent != null) GUILayout.EndArea ();
 	}
@@ -51,7 +51,7 @@ public class fadeableWindow : simpleWindow {
 		return m_enelabel.getOpacity ();
 	}
 	public void getEneLabelLocation(){
-		m_DrawArea.x = m_enelabel.getContentRect().x + (m_enelabel.enemy.m_DrawArea.width - m_DrawArea.width)/2.0f;
+		m_DrawArea.x = m_enelabel.getContentRect().x + (m_enelabel.widthPartySize() - m_DrawArea.width)/2.0f;
 		m_DrawArea.y = m_enelabel.getContentRect().y;
 	}
 	public void setOpacity(){

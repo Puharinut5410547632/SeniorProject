@@ -21,7 +21,13 @@ public class simpleLabel : simpleWindow {
 		adjustFontSize ();
 		adjustAlignment ();
 		setLocation ();
-		GUI.Label(m_DrawArea, label,labelStyle);
+		if (m_texture == null) {
+			GUI.Label (resizeGUI (m_DrawArea), label, labelStyle);
+		}
+		if (m_texture != null) {
+			GUI.Box (resizeGUI (m_DrawArea), m_texture, labelStyle);
+			GUI.Label (resizeGUI (m_DrawArea), label, labelStyle);
+		}
 		if(m_parent != null) GUILayout.EndArea ();
 	}
 
@@ -46,7 +52,7 @@ public class simpleLabel : simpleWindow {
 
 	public void changeFontSize(){
 		
-		fontSize = fontSize* Screen.height / 1280.000f;
+		fontSize = fontSize* Screen.height / 1920.000f;
 	}
 
 
