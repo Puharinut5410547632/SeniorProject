@@ -1,0 +1,44 @@
+//CASE LOCKED SO FOLLOW THE EXACT CHARACTERS!
+//If the char special mechanic = "stance" then add
+//in the amount of stances and default stance
+//If the character has a dodge mechanic, add in dodge!
+//If the character has a stance, specify the different
+//skills in each stanceX_skill
+//Maximum of 3 stances supported
+//Rune system is for special mages like Sarnu
+mChar_name=""
+mChar_attackPower=""
+mChar_defense=""
+mChar_hp=""
+mChar_ap=""
+mChar_job=""
+mChar_UltimateCharge=""
+mChar_faceTexturePath=""
+mChar_headTexturePath=""
+mChar_fullTexturePath=""
+mChar_specialMechanic=""
+mChar_mechanicDefinition=""
+mChar_stanceAmount=""
+mChar_currentStance=""
+mChar_stance1_Skill1=""
+mChar_stance1_skill2=""
+mChar_stance1_skill3=""
+mChar_stance1_skill4=""
+mChar_stance2_Skill1=""
+mChar_stance2_skill2=""
+mChar_stance2_skill3=""
+mChar_stance2_skill4=""
+mChar_stance3_Skill1=""
+mChar_stance3_skill2=""
+mChar_stance3_skill3=""
+mChar_stance3_skill4=""
+mChar_dodgeRate=""
+mChar_skill1=""
+mChar_skill2=""
+mChar_skill3=""
+mChar_skill4=""
+mChar_supportSkill=""
+mChar_rune1=""
+mChar_rune2=""
+mChar_rune3=""
+mChar_rune4=""

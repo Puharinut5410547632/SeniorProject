@@ -1,0 +1,32 @@
+//CASE LOCKED SO FOLLOW THE EXACT CHARACTERS!
+//If the char special mechanic = "stance" then add
+//in the amount of stances and default stance
+//If the character has a dodge mechanic, add in dodge!
+//If the character has a stance, specify the different
+//skills in each stanceX_skill
+//Maximum of 3 stances supported
+//Rune system is for special mages like Sarnu
+//Support skill is required for supporting
+mChar_name="Enfys"
+mChar_attackPower="60"
+mChar_defense="100"
+mChar_hp="600"
+mChar_ap="300"
+mChar_job="Archer"
+mChar_UltimateCharge="8"
+mChar_UltimateSkill=""
+mChar_faceTexturePath="Character/Enfys/face"
+mChar_headTexturePath="Character/Enfys/head"
+mChar_fullTexturePath=""
+mChar_specialMechanic="Light of Qvaci"
+mChar_mechanicDefinition="Enfys gains a portion of his AP every turn. He also gains AP when his allies use a skill based on the AP cost. If he does not have enough AP for a skill, he will use his own health instead as a cost."
+mChar_dodgeRate=""
+mChar_skill1=""
+mChar_skill2=""
+mChar_skill3=""
+mChar_skill4=""
+mChar_supportSkill=""
+mChar_rune1=""
+mChar_rune2=""
+mChar_rune3=""
+mChar_rune4=""

@@ -1,0 +1,30 @@
+//CASE LOCKED SO FOLLOW THE EXACT CHARACTERS!
+//If the char special mechanic = "stance" then add
+//in the amount of stances and default stance
+//If the character has a dodge mechanic, add in dodge!
+//If the character has a stance, specify the different
+//skills in each stanceX_skill
+//Maximum of 3 stances supported
+//Rune system is for special mages like Sarnu
+//Support skill is required for supporting
+mChar_name="Volfram"
+mChar_attackPower="90"
+mChar_defense="100"
+mChar_hp="2000"
+mChar_ap="100"
+mChar_job="Fighter"
+mChar_UltimateCharge="3"
+mChar_faceTexturePath="Character/Volfram/face"
+mChar_headTexturePath="Character/Volfram/head"
+mChar_fullTexturePath=""
+mChar_specialMechanic=""
+mChar_dodgeRate=""
+mChar_skill1=""
+mChar_skill2=""
+mChar_skill3=""
+mChar_skill4=""
+mChar_supportSkill=""
+mChar_rune1=""
+mChar_rune2=""
+mChar_rune3=""
+mChar_rune4=""
