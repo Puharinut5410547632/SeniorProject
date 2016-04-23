@@ -1,0 +1,145 @@
+mStory1_action="changeSFX"
+mStory1_sfx="Audio/se/monSpawn"
+
+mStory2_action="changeBackground"
+mStory2_BG="Texture/storyScene/chapter/1-1/pic1"
+mStory2_BGDelay="2.0"
+
+mStory3_action="changeBackground"
+mStory3_BG="Texture/black"
+mStory3_BGDelay="2.0"
+
+mStory4_action="changeSFX"
+mStory4_sfx="Audio/se/story_bird_chirp"
+
+mStory5_action="changeBackground"
+mStory5_BG="Texture/storyScene/chapter/1-1/pic2"
+mStory5_BGDelay="3.5"
+
+mStory6_action="changeBackground"
+mStory6_BG="Texture/storyScene/chapter/1-1/pic3"
+mStory6_BGDelay="3.5"
+
+mStory7_action="changeText"
+mStory7_char=""
+mStory7_text="7 days ago, the Holy Church of Lumitia sent a caravan over to Blestain, a continent to the north, to retrieve an artifact."
+
+mStory8_action="changeText"
+mStory8_char=""
+mStory8_text="Protected by the royal guards and hired mercenaries, the caravan was well-prepared for any attacks."
+
+mStory9_action="changeText"
+mStory9_char=""
+mStory9_text="While heading back to Elysia, the holy capital city of Sancturia, the caravan decided to take one final break at the Celentine Forest."
+
+mStory10_action="changeText"
+mStory10_char=""
+mStory10_text="Taking pride in its strength, the caravan was prepared for any foolish bandits desiring its goods."
+
+mStory11_action="changeBackground"
+mStory11_BG="Texture/black"
+mStory11_BGDelay="1.5"
+
+mStory12_action="changeText"
+mStory12_char="Katzix"
+mStory12_text="....."
+
+mStory13_action="changeText"
+mStory13_char=""
+mStory13_text="Nearby, a new and growing guild of thieves were planning a raid on the caravan."
+
+mStory14_action="changeBackground"
+mStory14_BG="Texture/storyScene/chapter/1-1/pic3"
+mStory14_BGDelay="1.5"
+
+mStory15_action="changeSFX"
+mStory15_sfx="Audio/se/story_grass_walk"
+
+mStory16_action="changeText"
+mStory16_char="Katzix"
+mStory16_text="....."
+
+mStory17_action="changeText"
+mStory17_char="Junon"
+mStory17_text="Yo Katz! How's the scouting?"
+
+mStory18_action="changeText"
+mStory18_char="Katzix"
+mStory18_text="There're... 15 of them, nya. 2 managuns, 2 crossbows and 1 bow. It will take me 6 seconds to get rid of all of them."
+
+mStory19_action="changeText"
+mStory19_char="Junon"
+mStory19_text="That's good enough for us, Katz. My gang'll take care of the rest and split the forces in half."
+
+mStory20_action="changeText"
+mStory20_char="Katzix"
+mStory20_text="..."
+
+mStory21_action="changeText"
+mStory21_char="Katzix"
+mStory21_text="Junya..."
+
+mStory22_action="changeText"
+mStory22_char="Junon"
+mStory22_text="What is it, buddy?"
+
+mStory23_action="changeText"
+mStory23_char="Katzix"
+mStory23_text="Are we really doing this?"
+
+mStory24_action="changeText"
+mStory24_char="Junon"
+mStory24_text="Come on, buddy. Like Sean said, now's the time for us to make a name for ourselves."
+
+mStory25_action="changeText"
+mStory25_char="Junon"
+mStory25_text="The Gate of Deceit will no longer be just a small no-name guild of thieves."
+
+mStory26_action="changeText"
+mStory26_char="Katzix"
+mStory26_text="But to attack a caravan that belongs to an organization that controls all of Sancturia, nya..."
+
+mStory27_action="changeText"
+mStory27_char="Junon"
+mStory27_text="No other guilds dare to attack them. Sean said that this is the best way to make a name for ourselves."
+
+mStory28_action="changeText"
+mStory28_char="Junon"
+mStory28_text="Let's trust him on this one. When was the last time he was actually wrong?"
+
+mStory29_action="changeText"
+mStory29_char="Katzix"
+mStory29_text="....."
+
+mStory30_action="changeText"
+mStory30_char="Junon"
+mStory30_text="Come on, buddy. Let's get this over with."
+
+mStory31_action="changeText"
+mStory31_char="Katzix"
+mStory31_text="....."
+
+mStory32_action="changeText"
+mStory32_char="Katzix"
+mStory32_text="(Sean has changed, nya.)"
+
+mStory33_action="changeBackground"
+mStory33_BG="Texture/black"
+mStory33_BGDelay="1.5"
+
+mStory34_action="changeText"
+mStory34_char=""
+mStory34_text="A few hours later, the Holy Church of Lumitia recieved news of the raid on the caravan."
+
+mStory35_action="changeText"
+mStory35_char="Ital"
+mStory35_text="..."
+
+mStory36_action="changeText"
+mStory36_char="Ital"
+mStory36_text="Inform Gine. It's time for their first mission."
+
+mStory37_action="clearChapter"
+mStory37_clear="1"
+
+mStory38_action="endStory"

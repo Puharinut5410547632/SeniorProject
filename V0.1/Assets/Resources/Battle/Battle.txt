@@ -1,0 +1,24 @@
+//Name just make it easier to describe and remember where it is
+//Wave describe how many to fight
+//enemy + number are what spawning in each wave
+//If there's only one, it's a Boss spawn. Change in the future to allow multiple boss spawns
+//clear is for player pref clear
+
+mBattle0_name="Demo Battle"
+mBattle0_bgm="Audio/bgm/Demo - Normal"
+mBattle0_bossbgm="Audio/bgm/Demo - Boss"
+mBattle0_bg="Texture/battle/stageBG/Demo"
+mBattle0_wave="3"
+mBattle0_enemy1="John Pla,Dragon"
+mBattle0_enemy2="Dragon,Sha nee,Sha Nee"
+mBattle0_enemy3="Falco"
+mBattle0_clear="-1"
+
+mBattle1_name="Gine: Richtofen Castle Raid"
+mBattle1_bgm="Audio/bgm/Gate of Deceit - Normal"
+mBattle1_bossbgm="Audio/bgm/Gate of Deceit - Normal"
+mBattle1_bg="Texture/battle/stageBG/Ruin of Richtofen"
+mBattle1_wave="2"
+mBattle1_enemy1="John Pla,John Pla,John Pla"
+mBattle1_enemy2="John Pla,Sha Nee,John Pla"
+mBattle1_clear="2"

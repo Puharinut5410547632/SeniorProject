@@ -1,0 +1,6 @@
+eChar_name="Sha Nee"
+eChar_attackPower="80"
+eChar_defense="5000"
+eChar_hp="400"
+eChar_100AI1="60000007"
+eChar_100AI2="60000008"

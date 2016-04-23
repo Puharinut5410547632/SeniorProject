@@ -185,4 +185,26 @@ public class simpleWindow : MonoBehaviour {
 		m_texture = Resources.Load (path) as Texture;
 	}
 
+
+	//animation path is Animation/targetType/animation/i
+	public void playAnimation(string animation){
+		StartCoroutine (startAnimation (animation));
+	}
+
+	//Constantly change animation and has a certain period of frame stop
+	public IEnumerator startAnimation(string animation){
+		
+		//Up to 1000 frames
+		for (int i =1; i < 1000; i++) {
+			m_texture = Resources.Load (animation + "/" + i) as Texture;
+			if(m_texture == null) {
+				Debug.Log (animation + "/" + i);
+				Debug.Log ("IT'S NULL");
+				Destroy(this.gameObject); // It's at the end so destroy it
+				break;
+			}		
+			yield return new WaitForSeconds(0.1f);
+		}
+	}
+
 }

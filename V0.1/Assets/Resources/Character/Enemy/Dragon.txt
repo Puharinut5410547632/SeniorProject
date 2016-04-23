@@ -1,0 +1,7 @@
+eChar_name="Dragon"
+eChar_attackPower="130"
+eChar_defense="400"
+eChar_hp="2000"
+eChar_100AI1="60000001"
+eChar_75AI1="60000002"
+eChar_50AI1="60000003"

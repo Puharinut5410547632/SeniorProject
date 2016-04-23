@@ -5,7 +5,6 @@ public class textBox : MonoBehaviour {
 
 	//Condition for textbox that is running
 	public bool runningText;
-	public bool textTouch;
 
 	public string fullText;
 	public string currentText;
@@ -22,6 +21,10 @@ public class textBox : MonoBehaviour {
 	public fadeableWindow textArea;
 	public fadeableWindow nextButton;
 	public fadeableWindow characterArt;
+
+	public AudioSource source; // for typing sfx
+	public string audioPath;
+	public AudioClip audioSE;
 
 	public State m_state;
 	public enum State
@@ -125,12 +128,11 @@ public class textBox : MonoBehaviour {
 		//Prevent this from being called again
 		currentText = "";
 		fullText = text;
-		textTouch=false;
 		m_state = State.HASTEXT;
-		runningText = true;
+
 
 		yield return new WaitForSeconds(0.3f);
-		textTouch = true;
+		runningText = true;
 		//Reprint the whole thing from start.
 
 		textChar = fullText.ToCharArray ();
@@ -169,8 +171,6 @@ public class textBox : MonoBehaviour {
 			StartCoroutine(swapPicture ());
 		}
 
-
-
 	}
 	
 	public IEnumerator swapPicture(){
@@ -191,4 +191,14 @@ public class textBox : MonoBehaviour {
 			characterArt.fadeIn ();
 		}
 	}
+
+	public void playSound(){
+		source.PlayOneShot (audioSE);
+	}	
+	
+	public void playSound(string path){
+		audioPath = path;
+		audioSE = Resources.Load (audioPath) as AudioClip;
+		source.PlayOneShot (audioSE);
+	}	
 }

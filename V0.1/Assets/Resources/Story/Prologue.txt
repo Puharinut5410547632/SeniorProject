@@ -1,0 +1,162 @@
+mStory1_action="changeSFX"
+mStory1_sfx="Audio/se/monSpawn"
+
+mStory2_action="changeBackground"
+mStory2_BG="Texture/storyScene/chapter/prologue/pic1"
+mStory2_BGDelay="2.0"
+
+mStory3_action="changeBackground"
+mStory3_BG="Texture/black"
+mStory3_BGDelay="1.5"
+
+mStory4_action="changeSong"
+mStory4_song="Audio/bgm/stage1"
+
+mStory5_action="changeText"
+mStory5_char=""
+mStory5_text="It was a time before light or darkness existed."
+
+mStory6_action="changeText"
+mStory6_char=""
+mStory6_text="The story of how the world was created"
+
+mStory7_action="changeBackground"
+mStory7_BG="Texture/storyScene/chapter/prologue/pic2"
+mStory7_BGDelay="1.3"
+
+mStory8_action="changeText"
+mStory8_char=""
+mStory8_text="Lumitia, the Illuminating Light"
+
+mStory9_action="changeText"
+mStory9_char=""
+mStory9_text="Loliea, the Princess of the Gentle Breeze"
+
+mStory10_action="changeBackground"
+mStory10_BG="Texture/storyScene/chapter/prologue/pic3"
+mStory10_BGDelay="1.3"
+
+mStory11_action="changeText"
+mStory11_char=""
+mStory11_text="Ignis, the Rage of Fire"
+
+mStory12_action="changeText"
+mStory12_char=""
+mStory12_text="Andemonine, the Heart of the Sea"
+
+mStory13_action="changeBackground"
+mStory13_BG="Texture/storyScene/chapter/prologue/pic4"
+mStory13_BGDelay="1.3"
+
+mStory14_action="changeText"
+mStory14_char=""
+mStory14_text="Titanos, The Embodiment of Heavenly Earth"
+
+mStory15_action="changeText"
+mStory15_char=""
+mStory15_text="Sierra, the Sovereign of the Night"
+
+mStory16_action="changeText"
+mStory16_char=""
+mStory16_text="They were the six gods that were to become the very seed and the pillar of a new world, Ahntrolan."
+
+mStory17_action="changeText"
+mStory17_char=""
+mStory17_text="A perfect world shaped into a paradise."
+
+mStory18_action="changeText"
+mStory18_char=""
+mStory18_text="With each god having different preferences, many races were created"
+
+mStory19_action="changeBackground"
+mStory19_BG="Texture/storyScene/chapter/prologue/pic5"
+mStory19_BGDelay="1.3"
+
+mStory20_action="changeText"
+mStory20_char=""
+mStory20_text="But Sierra had his own ideals. He believed that the other gods had tainted the world with their creations."
+
+mStory21_action="changeText"
+mStory21_char=""
+mStory21_text="He believed that the world must be purged and restarted, thus began the war between the light and darkness."
+
+mStory22_action="changeText"
+mStory22_char=""
+mStory22_text="Unleashing his creations, the horde of monsters struck fear into the heart of Ahntrolan."
+
+mStory23_action="changeText"
+mStory23_char=""
+mStory23_text="Many races were wiped out and Sierra was feared as the God of Darkness."
+
+mStory24_action="changeBackground"
+mStory24_BG="Texture/storyScene/chapter/prologue/pic6"
+mStory24_BGDelay="1.3"
+
+mStory25_action="changeText"
+mStory25_char=""
+mStory25_text="Lumitia could not stand Sierra's action. She was the first to act."
+
+mStory26_action="changeText"
+mStory26_char=""
+mStory26_text="Persuading the other gods to join her, they became the Gods of Light and stood against Sierra."
+
+mStory27_action="changeBackground"
+mStory27_BG="Texture/storyScene/chapter/prologue/pic7"
+mStory27_BGDelay="1.3"
+
+mStory28_action="changeText"
+mStory28_char=""
+mStory28_text="Although Sierra could be defeated, the moment of peace did not last forever."
+
+mStory29_action="changeText"
+mStory29_char=""
+mStory29_text="As long as the people continued to fear him and relied on the Gods of Light to protect them, Sierra would return."
+
+mStory30_action="changeText"
+mStory30_char=""
+mStory30_text="At the end of their third battle, Ahntrolan was crumbling. The battle was too much for the land to bear."
+
+mStory31_action="changeText"
+mStory31_char=""
+mStory31_text="Hoping to save what remained of Ahntrolan, Lumitia sacrified most of her power and sealed Sierra within the Boundary of Darkness beyond Time."
+
+mStory32_action="changeText"
+mStory32_char=""
+mStory32_text="As long as her stars watched over Sierra, he would remain a prisoner of her seal."
+
+mStory33_action="changeBackground"
+mStory33_BG="Texture/storyScene/chapter/prologue/pic8"
+mStory33_BGDelay="1.3"
+
+mStory34_action="changeText"
+mStory34_char=""
+mStory34_text="Although Sierra was sealed away, his influences still remained."
+
+mStory35_action="changeText"
+mStory35_char=""
+mStory35_text="The night became the domain of darkness where Sierra's creations could roam free."
+
+mStory36_action="changeText"
+mStory36_char=""
+mStory36_text="Where these creatures went, fear would spread, giving Sierra the much needed power to break the seal."
+
+mStory37_action="changeBackground"
+mStory37_BG="Texture/storyScene/chapter/prologue/pic9"
+mStory37_BGDelay="1.3"
+
+mStory38_action="changeText"
+mStory38_char=""
+mStory38_text="Soon, the true evil would spread its icy tendrils across all of Ahntrolan once more."
+
+mStory39_action="changeText"
+mStory39_char=""
+mStory39_text="Unable to hide behind the back of their Gods any longer, the children of Ahntrolan must overcome this foe together... or perish."
+
+mStory40_action="clearChapter"
+mStory40_clear="0"
+
+mStory41_action="changeBackground"
+mStory41_BG="Texture/black"
+mStory41_BGdelay="1.3"
+
+mStory42_action="endStory"

@@ -1,0 +1,8 @@
+mStory1_chapter="Prologue"
+mStory1_location="BoundBeyondTime"
+
+mStory2_chapter="Chapter 1-1"
+mStory2_location="CelentineForest"
+
+mStory3_chapter="Chapter 1-2"
+mStory3_location="RichtofenCastle"

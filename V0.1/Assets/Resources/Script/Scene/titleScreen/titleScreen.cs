@@ -40,21 +40,24 @@ public class titleScreen : MonoBehaviour {
 		}
 
 		if(!PlayerPrefs.HasKey("Char3")){
-			PlayerPrefs.SetString("Char3", "Katzix");
+			PlayerPrefs.SetString("Char3", "Gwenette");
 		}
 
 		if(!PlayerPrefs.HasKey("Char4")){
-			PlayerPrefs.SetString("Char4", "Agil");
+			PlayerPrefs.SetString("Char4", "Liel");
 		}
 
 		if(!PlayerPrefs.HasKey("StoryChapter")){
-			PlayerPrefs.SetString("StoryChapter", "0");
+			PlayerPrefs.SetInt("StoryChapter", 0);
+		}
+
+		if(!PlayerPrefs.HasKey("PickedChapter")){
+			PlayerPrefs.SetString("PickedChapter", "0");
 		}
 
 		if(!PlayerPrefs.HasKey("BattleID")){
 			PlayerPrefs.SetString("BattleID", "0");
 		}
-		
 		buttonStatus = 2;
 		StartCoroutine (beginFirstFadeIn (1.5f)); 
 
@@ -91,7 +94,7 @@ public class titleScreen : MonoBehaviour {
 			compatibleLabel.label = "<color=red> This device is not fully supported.</color>";
 		if (height > 1920.0f)
 			compatibleLabel.label = "<color=red> This device is not fully supported.</color>";
-		if (height/width < 1.4f)
+		if (height/width < 1.2f)
 			compatibleLabel.label = "<color=red> This device is not fully supported.</color>";
 	}
 

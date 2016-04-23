@@ -1,0 +1,6 @@
+mStory1_action="changeText"
+mStory1_char=""
+mStory1_text="As this is a demo, we will skip right into BATTTLEEEE."
+
+mStory2_action="beginBattle"
+mStory2_battleID="1"

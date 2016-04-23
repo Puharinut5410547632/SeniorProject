@@ -1,0 +1,27 @@
+//CASE LOCKED SO FOLLOW THE EXACT CHARACTERS!
+//If the char special mechanic = "stance" then add
+//in the amount of stances and default stance
+//If the character has a dodge mechanic, add in dodge!
+//If the character has a stance, specify the different
+//skills in each stanceX_skill
+//Maximum of 3 stances supported
+//Rune system is for special mages like Sarnu
+//Support skill is required for supporting
+mChar_name="Gwenette"
+mChar_attackPower="250"
+mChar_defense="100"
+mChar_hp="1500"
+mChar_ap="200"
+mChar_faceTexturePath="Character/Gwenette/face"
+mChar_headTexturePath="Character/Gwenette/head"
+mChar_fullTexturePath=""
+mChar_specialMechanic="Gun Expert"
+mChar_mechanicDefinition="Gwenette skills use an Ammo system along with the ap cost. However, the lower bullets she has, the stronger her skills become. Gwenette can spend a turn to reload."
+mChar_dodgeRate=""
+mChar_skill1="30001001"
+mChar_skill2="30001002"
+mChar_skill3="30001003"
+mChar_skill4="30001004"
+mChar_UltimateCharge="6"
+mChar_UltimateSkill="30001005"
+mChar_supportSkill=""

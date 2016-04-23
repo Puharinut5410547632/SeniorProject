@@ -13,7 +13,7 @@ public class Character : MonoBehaviour {
 	public int currentHP { get; set; }
 	public int maxAP {get; set;}
 	public int currentAP {get; set;}
-	public string job { get; set; }
+
 	public string side { get; set; }
 	public bool isAlive { get; set; }
 	public bool isDisabled { get; set; }
@@ -163,7 +163,7 @@ public class Character : MonoBehaviour {
 	public void die()	{
 		isAlive = false;
 
-		if (side == "Enemy" && job == "Monster") {
+		if (side == "Enemy") {
 			speedY = recalculateY(2.0f);
 			targetY = defaultY + recalculateY (70.0f);
 			playSound ("Audio/se/monDie");
@@ -171,21 +171,26 @@ public class Character : MonoBehaviour {
 		}
 		if (characterType != "Player")	Destroy(this.gameObject,0.7f);
 	}
-	
+
+	public float getCurrentHealthPercent(){
+		float percent = (currentHP * 1.00f) / maxHP * 100.0f;
+		return percent;
+	}
+
 	public void alive()	{
 		isAlive = true;
-		if (side == "Enemy" && job == "Monster") 
+		if (side == "Enemy") 
 			fadeIn ();
 		
 	}
 
 	//Deal damage, multiplier based on skill power, penetration whether it goes through armor or not.
-	public void isHurt(int attack, float multiplier, bool penetration){
-		int flatReduction = defense / 10;
-		float percentReduction = defense / 100;
-		float calculateDamage = (attack * multiplier - flatReduction) * (1.0f - percentReduction);
+	public void isHurt(int attack, float flatDamage, float multiplier, bool penetration){
+		int flatReduction = defense / 10; // Every 10 defense is worth 1 point negated
+		float percentReduction = defense / 10000; // Every 100 defense is worth 1% damage reduction
+		float calculateDamage =  flatDamage+ (attack * multiplier - flatReduction) * (1.0f - percentReduction);
 		if (penetration == true)
-			calculateDamage = attack;
+			calculateDamage = (int) ((float) attack * multiplier + attack);
 		if (calculateDamage < 1)
 			calculateDamage = 1.0f;
 		currentHP -= (int)calculateDamage;
@@ -194,15 +199,30 @@ public class Character : MonoBehaviour {
 			StartCoroutine (getHit ());
 	}
 	
-	public void isHeal(int heal)	{
+	public void isHealed(float flatHeal, float percent)	{
 		//Prevent overhealing
-		if (( currentHP + heal) > maxHP)
-			heal = maxHP - currentHP;
 
+		int heal = (int)((flatHeal) + (maxHP*1.0f * percent / 100));
 		currentHP += heal;
+	
+		createHealLabel (heal);
+
+		if (currentHP > maxHP)
+			currentHP = maxHP;
 
 	}
-	
+
+	public void isPercentHeal(float percent)	{
+		//Prevent overhealing
+
+		currentHP += (int)(currentHP*percent/100);
+
+		
+		if (currentHP > maxHP)
+			currentHP = maxHP;
+		
+	}
+
 	public void isCure()	{
 
 		isDisabled = false;
@@ -255,6 +275,16 @@ public class Character : MonoBehaviour {
 		source.PlayOneShot (audioSE);
 	}	
 
+	public void createHealLabel(int heal){
+		GameObject obj = Instantiate (Resources.Load ("Prefab/damageLabel")) as GameObject;
+		simpleLabel number = obj.GetComponent<simpleLabel> ();
+		number.m_DrawArea.width = number.m_DrawArea.width/partySize;
+		number.m_DrawArea.x = m_DrawArea.x;
+		number.label = "<color=green>" + heal + "</color>";
+		number.moveUp ();
+		Destroy (obj, 0.5f);
+	}
+
 	public void createDamageLabel(int damage){
 			
 			GameObject obj = Instantiate (Resources.Load ("Prefab/damageLabel")) as GameObject;
@@ -268,11 +298,30 @@ public class Character : MonoBehaviour {
 		}
 
 	public void useAP(int AP){
-		currentAP -= AP;
+		//Enfys mechanic of converting missing AP into health cost
+		if (currentAP < AP) {
+			healthCost (AP - currentAP); //Over cost turns into health cost
+			currentAP = 0;
+		}
+
+		else currentAP -= AP;
+
+	}
+
+	public void healthCost(int cost){
+		currentHP -= cost;	
+
 	}
 
 	public void gainAP(int AP){
 		currentAP += AP;
+		if (currentAP > maxAP)
+			currentAP = maxAP;
+	}
+
+	public void gainPercentAP(float percent){
+		currentAP += (int) ((maxAP*1.0f) * percent/100.0f);
+//		Debug.Log (currentAP);
 		if (currentAP > maxAP)
 			currentAP = maxAP;
 	}

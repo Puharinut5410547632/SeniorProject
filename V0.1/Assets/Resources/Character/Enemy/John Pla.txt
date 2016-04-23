@@ -1,0 +1,7 @@
+eChar_name="John Pla"
+eChar_attackPower="170"
+eChar_defense="80"
+eChar_hp="1200"
+eChar_100AI1="60000004"
+eChar_100AI2="60000005"
+eChar_25AI1="60000006"

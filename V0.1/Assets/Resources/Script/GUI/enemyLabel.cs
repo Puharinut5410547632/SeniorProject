@@ -62,7 +62,7 @@ public class enemyLabel : MonoBehaviour {
 
 	//Receive information from selected enemy.
 	public void getEnemy(){
-		label = "LV. " + enemy.level + "  " + enemy.charName ;
+		label = "<color=white>LV. " + enemy.level + "  " + enemy.charName + "</color>" ;
 	}
 	
 	public void adjustAlignment(){
